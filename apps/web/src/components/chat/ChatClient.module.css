@@ -1,0 +1,652 @@
+.page {
+  min-height: 100dvh;
+  height: 100dvh;
+  padding: clamp(0.9rem, 2vw, 1.4rem);
+  overflow: hidden;
+  background: #4b435e;
+}
+
+.shell {
+  width: min(100%, 1240px);
+  height: calc(100dvh - clamp(1.8rem, 4vw, 2.8rem));
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 1.8rem;
+  display: grid;
+  grid-template-columns: minmax(300px, 360px) minmax(0, 1fr);
+  overflow: hidden;
+  box-shadow: 0 22px 60px rgba(17, 24, 39, 0.18);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.sidebar,
+.chatArea {
+  min-width: 0;
+  min-height: 0;
+}
+
+.sidebar {
+  display: grid;
+  grid-template-rows: auto auto auto minmax(0, 1fr);
+  border-right: 1px solid rgba(15, 23, 42, 0.08);
+  background: #ffffff;
+}
+
+.sidebarHeader,
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.sidebarIdentity,
+.activeUser {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  min-width: 0;
+}
+
+.sidebarActions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sidebarTitle,
+.activeUserName,
+.profileTitle {
+  margin: 0;
+  color: #24324b;
+}
+
+.sidebarTitle {
+  font-size: 1.8rem;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.activeUserName {
+  font-size: 1.1rem;
+  font-weight: 800;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.activeUserInfo,
+.userTime,
+.userPreview,
+.userStatusInline,
+.profileSubtitle,
+.profileFieldLabel,
+.profileFeedback,
+.emptyConversation,
+.emptyState,
+.loadingCard,
+.composerError {
+  color: rgba(71, 85, 105, 0.92);
+}
+
+.activeUserInfo {
+  margin: 0.18rem 0 0;
+  font-size: 0.9rem;
+}
+
+.iconButton,
+.accountChip,
+.userCard,
+.sendButton,
+.profileAvatarButton {
+  border: none;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+}
+
+.iconButton:hover,
+.accountChip:hover,
+.userCard:hover,
+.sendButton:hover,
+.profileAvatarButton:hover {
+  transform: translateY(-1px);
+}
+
+.iconButton {
+  width: 2.7rem;
+  height: 2.7rem;
+  border-radius: 999px;
+  display: inline-grid;
+  place-items: center;
+  background: #edf3ff;
+  color: #24478f;
+}
+
+.searchWrap {
+  margin: 0 1rem 0.8rem;
+  position: relative;
+}
+
+.searchIcon {
+  position: absolute;
+  inset: 50% auto auto 0.95rem;
+  transform: translateY(-50%);
+  color: rgba(100, 116, 139, 0.84);
+}
+
+.searchField {
+  width: 100%;
+  height: 3rem;
+  border-radius: 999px;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  background: #f8fafc;
+  padding: 0 1rem 0 2.75rem;
+  color: #24324b;
+  outline: none;
+}
+
+.searchField:focus,
+.composerInput:focus {
+  border-color: rgba(36, 71, 143, 0.28);
+  box-shadow: 0 0 0 4px rgba(36, 71, 143, 0.08);
+}
+
+.notificationsBar {
+  margin: 0 1rem 0.8rem;
+  padding: 0.8rem 0.95rem;
+  border-radius: 1rem;
+  background: #eef3ff;
+  color: #24478f;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.userList {
+  padding: 0 0.9rem 1rem;
+  overflow: auto;
+  min-height: 0;
+  display: grid;
+  align-content: start;
+  gap: 0.7rem;
+}
+
+.userCard {
+  background: #fafbff;
+  border-radius: 1rem;
+  padding: 0.85rem 0.9rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 0.75rem;
+  text-align: left;
+}
+
+.userCardActive {
+  background: #e8f0ff;
+  box-shadow: inset 0 0 0 1px rgba(36, 71, 143, 0.14);
+}
+
+.userMeta {
+  min-width: 0;
+  display: grid;
+  gap: 0.28rem;
+}
+
+.userLine,
+.userLineSecondary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.userName {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #24324b;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.userTime,
+.userPreview,
+.userStatusInline {
+  font-size: 0.88rem;
+}
+
+.userPreview {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.userStatusInline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+.dot {
+  width: 0.52rem;
+  height: 0.52rem;
+  border-radius: 999px;
+  background: #cbd5e1;
+}
+
+.dotOnline {
+  background: #16a34a;
+  box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.1);
+}
+
+.unreadBadge {
+  min-width: 1.4rem;
+  height: 1.4rem;
+  padding: 0 0.32rem;
+  border-radius: 999px;
+  display: inline-grid;
+  place-items: center;
+  background: #24478f;
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.chatArea {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  background: #fff;
+  min-height: 0;
+}
+
+.accountChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.35rem 0.6rem 0.35rem 0.4rem;
+  border-radius: 999px;
+  background: #f8fafc;
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.08);
+}
+
+.accountChipText {
+  font-weight: 700;
+  color: #24478f;
+}
+
+.messages {
+  min-height: 0;
+  overflow: auto;
+  padding: 1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  background: #fbfcff;
+}
+
+.messageRowMine,
+.messageRowOther {
+  display: flex;
+}
+
+.messageRowMine {
+  justify-content: flex-end;
+}
+
+.messageRowOther {
+  justify-content: flex-start;
+}
+
+.messageBubble {
+  max-width: min(72%, 34rem);
+  padding: 0.8rem 0.95rem 0.65rem;
+  border-radius: 1.2rem;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+  display: grid;
+  gap: 0.28rem;
+}
+
+.messageBubbleMine {
+  background: linear-gradient(135deg, #355ec9 0%, #4d75dd 100%);
+  color: #fff;
+  border-bottom-right-radius: 0.35rem;
+}
+
+.messageBubbleOther {
+  background: #fff;
+  color: #24324b;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  border-bottom-left-radius: 0.35rem;
+}
+
+.messageText {
+  margin: 0;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.messageTime {
+  justify-self: end;
+  font-size: 0.76rem;
+  opacity: 0.72;
+}
+
+.emptyConversation,
+.emptyState,
+.loadingCard {
+  border-radius: 1rem;
+  padding: 1rem 1.1rem;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+.emptyConversation {
+  align-self: center;
+  justify-self: center;
+  display: grid;
+  gap: 0.3rem;
+  text-align: center;
+}
+
+.composer {
+  padding: 0.95rem 1rem calc(0.95rem + env(safe-area-inset-bottom));
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+  background: #fff;
+}
+
+.composerForm {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.composerField {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.35rem;
+  border-radius: 999px;
+  background: #f8fafc;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+}
+
+.composerInput {
+  width: 100%;
+  height: 3rem;
+  border: none;
+  background: transparent;
+  padding: 0 0.9rem;
+  color: #24324b;
+  outline: none;
+}
+
+.sendButton {
+  width: 2.9rem;
+  height: 2.9rem;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #2e9860 0%, #27824f 100%);
+  color: #fff;
+  box-shadow: 0 12px 24px rgba(46, 152, 96, 0.22);
+}
+
+.sendButton:disabled,
+.profileAvatarButton:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.composerError {
+  margin: 0;
+  font-size: 0.84rem;
+  color: #b42318;
+}
+
+.loading {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: #4b435e;
+}
+
+.toasts {
+  position: fixed;
+  right: 1rem;
+  bottom: calc(1rem + env(safe-area-inset-bottom));
+  display: grid;
+  gap: 0.65rem;
+  z-index: 50;
+}
+
+.toast {
+  width: min(90vw, 320px);
+  padding: 0.95rem 1rem;
+  border-radius: 1rem;
+  background: rgba(15, 23, 42, 0.96);
+  color: #fff;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.22);
+}
+
+.toastTitle {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.toastDescription {
+  margin: 0.3rem 0 0;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.4;
+  font-size: 0.89rem;
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(15, 23, 42, 0.34);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.profileModal {
+  width: min(100%, 430px);
+  border-radius: 1.5rem;
+  background: #fff;
+  box-shadow: 0 28px 90px rgba(15, 23, 42, 0.2);
+  overflow: hidden;
+}
+
+.profileHeader {
+  padding: 1.1rem 1.15rem 1rem;
+}
+
+.profileTitle {
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.profileSubtitle {
+  margin: 0.32rem 0 0;
+  line-height: 1.45;
+}
+
+.profileBody {
+  padding: 0 1.15rem 1.2rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.profileAvatarWrap {
+  display: grid;
+  justify-items: center;
+  gap: 0.65rem;
+  padding: 0.35rem 0 0.15rem;
+}
+
+.profileAvatarButton {
+  position: relative;
+  padding: 0;
+  background: transparent;
+}
+
+.profileAvatarButton > img,
+.profileAvatarButton > div {
+  width: 5.75rem;
+  height: 5.75rem;
+  font-size: 1.7rem;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.1);
+}
+
+.profileAvatarEdit {
+  position: absolute;
+  right: -0.15rem;
+  bottom: -0.15rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: #24478f;
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(36, 71, 143, 0.22);
+}
+
+.profileData {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.profileField {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.95rem 1rem;
+  border-radius: 1rem;
+  background: #f8fafc;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.profileFieldLabel {
+  font-size: 0.85rem;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.profileFeedback {
+  margin: 0;
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+.sidebarHiddenMobile,
+.chatHiddenMobile {
+  display: none;
+}
+
+@media (max-width: 960px) {
+  .page {
+    padding: 0;
+  }
+
+  .shell {
+    width: 100%;
+    height: 100dvh;
+    border-radius: 0;
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar,
+  .chatArea {
+    height: 100dvh;
+  }
+
+  .sidebarHeader,
+  .topbar {
+    padding: 1rem;
+  }
+
+  .messages {
+    padding: 1rem;
+  }
+
+  .messageBubble {
+    max-width: min(86vw, 26rem);
+  }
+
+  .accountChipText {
+    display: none;
+  }
+
+  .modalOverlay {
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+  }
+
+  .profileModal {
+    width: min(92vw, 430px);
+    max-width: 430px;
+    max-height: calc(100dvh - 2rem);
+    border-radius: 1.4rem;
+    overflow: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .sidebarTitle {
+    font-size: 1.55rem;
+  }
+
+  .userName,
+  .userPreview,
+  .userTime,
+  .userStatusInline,
+  .notificationsBar,
+  .activeUserInfo {
+    font-size: 0.84rem;
+  }
+
+  .composer {
+    padding-inline: 0.85rem;
+  }
+
+  .composerField {
+    gap: 0.45rem;
+  }
+
+  .composerInput {
+    height: 2.8rem;
+    padding-inline: 0.8rem;
+  }
+
+  .sendButton {
+    width: 2.7rem;
+    height: 2.7rem;
+  }
+
+  .toasts {
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: calc(0.75rem + env(safe-area-inset-bottom));
+  }
+
+  .toast {
+    width: auto;
+  }
+}

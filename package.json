@@ -1,0 +1,28 @@
+{
+  "name": "ixc-chat-realtime",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "apps/web",
+    "apps/server"
+  ],
+  "scripts": {
+    "dev": "concurrently -n server,web -c cyan,magenta \"npm run dev:server\" \"npm run dev:web\"",
+    "dev:server": "npm run dev -w apps/server",
+    "dev:web": "npm run dev -w apps/web",
+    "build": "npm run build:server && npm run build:web",
+    "build:server": "npm run build -w apps/server",
+    "build:web": "npm run build -w apps/web",
+    "start:server": "npm run start -w apps/server",
+    "start:web": "npm run start -w apps/web",
+    "seed": "npm run seed -w apps/server",
+    "docker:up": "docker compose up --build",
+    "docker:up:detached": "docker compose up --build -d",
+    "docker:down": "docker compose down --remove-orphans",
+    "docker:reset": "docker compose down --volumes --remove-orphans",
+    "cluster:server": "npm run build -w apps/server && NODE_ENV=production CLUSTER_ENABLED=true npm run start -w apps/server"
+  },
+  "devDependencies": {
+    "concurrently": "9.0.1"
+  }
+}

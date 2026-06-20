@@ -1,0 +1,27 @@
+.avatar {
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  color: #16171f;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.avatarSm {
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 0.9rem;
+}
+
+.avatarMd {
+  width: 3rem;
+  height: 3rem;
+  font-size: 1rem;
+}
+
+.avatarLg {
+  width: 4.5rem;
+  height: 4.5rem;
+  font-size: 1.35rem;
+}

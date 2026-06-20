@@ -1,0 +1,29 @@
+.form {
+  display: grid;
+  gap: 0.95rem;
+}
+
+.iconButton {
+  width: 2.3rem;
+  height: 2.3rem;
+  border-radius: 999px;
+  border: none;
+  background: rgba(24, 38, 63, 0.06);
+  color: rgba(24, 38, 63, 0.72);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.iconButton:hover {
+  background: rgba(24, 38, 63, 0.1);
+}
+
+.errorBox {
+  border: 1px solid rgba(180, 35, 24, 0.14);
+  background: rgba(253, 238, 236, 0.9);
+  color: #912018;
+  border-radius: 1rem;
+  padding: 0.9rem 1rem;
+  font-size: 0.95rem;
+}
