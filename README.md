@@ -38,8 +38,8 @@ cp .env.example .env
 Valores padrão:
 
 ```env
-NODE_ENV=development
-CLUSTER_ENABLED=false
+NODE_ENV=production
+CLUSTER_ENABLED=true
 CLUSTER_WORKERS=2
 JWT_SECRET=7e4d8c8f5a0c4d0e9c4c6f4a2f9e1b6c3d8a7f5b9e2c1d4a6f8b0c3d5e7f9a1
 NEXT_PUBLIC_API_URL=http://localhost:4000/api/v1
