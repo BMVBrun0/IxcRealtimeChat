@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { getAuthenticatedUser } from "../types/auth";
 import { buildUserList, updateUserAvatar } from "../services/user.service";
 import { serializeUser } from "../serializers/user.serializer";
+import { emitUsersRefresh } from "../sockets/socket-bus";
 
 export const listUsers = async (request: Request, response: Response) => {
   const users = await buildUserList(getAuthenticatedUser(request));
@@ -22,6 +23,7 @@ export const updateProfileAvatarController = async (request: Request, response: 
   }
 
   const user = await updateUserAvatar(getAuthenticatedUser(request), request.file);
+  emitUsersRefresh();
 
   response.status(200).json({
     success: true,

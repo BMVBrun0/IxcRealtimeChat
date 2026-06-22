@@ -74,6 +74,14 @@ const sortUsers = (input: UserSummary[]) => {
   });
 };
 
+const buildUnreadMap = (input: UserSummary[]) => {
+  return Object.fromEntries(
+    input
+      .filter((user) => (user.unreadCount ?? 0) > 0)
+      .map((user) => [user.id, user.unreadCount ?? 0])
+  ) as Record<string, number>;
+};
+
 export const ChatClient = () => {
   const router = useRouter();
   const socketRef = useRef<Socket | null>(null);
@@ -204,11 +212,7 @@ export const ChatClient = () => {
 
         const mobile = typeof window !== "undefined" && window.matchMedia("(max-width: 960px)").matches;
         const sortedContacts = sortUsers(contactList);
-        const initialUnread = Object.fromEntries(
-          sortedContacts
-            .filter((user) => (user.unreadCount ?? 0) > 0)
-            .map((user) => [user.id, user.unreadCount ?? 0])
-        );
+        const initialUnread = buildUnreadMap(sortedContacts);
 
         setCurrentUser(me);
         setUsers(sortedContacts);
@@ -278,6 +282,39 @@ export const ChatClient = () => {
     const socket = createChatSocket(token);
     socketRef.current = socket;
 
+    const refreshUsers = async () => {
+      try {
+        const refreshedUsers = sortUsers(await api.users());
+        const refreshedUnread = buildUnreadMap(refreshedUsers);
+
+        setUsers(refreshedUsers);
+        setUnreadMap((current) => {
+          const nextMap = { ...refreshedUnread };
+
+          if (activeUserId && activeUserId in current && (nextMap[activeUserId] ?? 0) === 0) {
+            nextMap[activeUserId] = 0;
+          }
+
+          return nextMap;
+        });
+
+        setActiveUserId((currentActiveUserId) => {
+          if (!currentActiveUserId) {
+            return currentActiveUserId;
+          }
+
+          const stillExists = refreshedUsers.some((user) => user.id === currentActiveUserId);
+          if (stillExists) {
+            return currentActiveUserId;
+          }
+
+          return isMobile ? null : (refreshedUsers[0]?.id ?? null);
+        });
+      } catch {
+        // noop: keep current list if refresh fails
+      }
+    };
+
     socket.on("chat:message", (message: ChatMessage) => {
       setMessages((current) => {
         const conversationId = buildConversationId(currentUser.id, message);
@@ -314,16 +351,21 @@ export const ChatClient = () => {
             ...current,
             [message.sender.id]: (current[message.sender.id] ?? 0) + 1
           }));
-        }
 
-        pushToast(message.sender.name, shortenMessage(message.content, 72));
+          pushToast(message.sender.name, shortenMessage(message.content, 72));
 
-        if (document.hidden || activeUserId !== message.sender.id) {
-          maybeNotifyBrowser(
-            message.sender.name,
-            shortenMessage(message.content, 110),
-            message.sender.avatarUrl
-          );
+          if (document.hidden || activeUserId !== message.sender.id) {
+            maybeNotifyBrowser(
+              message.sender.name,
+              shortenMessage(message.content, 110),
+              message.sender.avatarUrl
+            );
+          }
+        } else {
+          setUnreadMap((current) => ({
+            ...current,
+            [message.sender.id]: 0
+          }));
         }
       }
     });
@@ -342,6 +384,10 @@ export const ChatClient = () => {
           )
         )
       );
+    });
+
+    socket.on("users:refresh", () => {
+      void refreshUsers();
     });
 
     socket.on("connect_error", () => {

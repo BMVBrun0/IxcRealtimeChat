@@ -13,6 +13,7 @@ import { configurePassport } from "./config/passport";
 import { errorHandler } from "./middlewares/error-handler";
 import { apiRouter } from "./routes";
 import { registerChatSocket } from "./sockets/register-chat-socket";
+import { setSocketServer } from "./sockets/socket-bus";
 
 export const createHttpServer = async () => {
   await connectDatabase();
@@ -54,6 +55,7 @@ export const createHttpServer = async () => {
     }
   });
 
+  setSocketServer(io);
   registerChatSocket(io);
 
   return {

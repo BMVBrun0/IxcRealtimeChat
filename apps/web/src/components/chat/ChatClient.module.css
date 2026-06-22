@@ -3,7 +3,6 @@
   height: 100dvh;
   padding: clamp(0.9rem, 2vw, 1.4rem);
   overflow: hidden;
-  background: #4b435e;
 }
 
 .shell {
@@ -370,8 +369,9 @@
 }
 
 .composerField {
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: 0.7rem;
   padding: 0.35rem;
@@ -382,12 +382,72 @@
 
 .composerInput {
   width: 100%;
+  min-width: 0;
   height: 3rem;
   border: none;
   background: transparent;
-  padding: 0 0.9rem;
+  padding: 0 0.25rem;
   color: #24324b;
   outline: none;
+}
+
+
+.composerAction {
+  width: 2.7rem;
+  height: 2.7rem;
+  border: none;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: #eef3ff;
+  color: #24478f;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+}
+
+.composerAction:hover {
+  transform: translateY(-1px);
+}
+
+.composerAction:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.emojiPicker {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 0.6rem);
+  width: min(100%, 18rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0.65rem;
+  border-radius: 1rem;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.14);
+  z-index: 4;
+}
+
+.emojiButton {
+  width: 2.2rem;
+  height: 2.2rem;
+  border: none;
+  border-radius: 0.75rem;
+  display: grid;
+  place-items: center;
+  background: #f8fafc;
+  cursor: pointer;
+  font-size: 1.05rem;
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+
+.emojiButton:hover {
+  transform: translateY(-1px);
+  background: #eef3ff;
 }
 
 .sendButton {
@@ -419,7 +479,6 @@
   display: grid;
   place-items: center;
   padding: 1rem;
-  background: #4b435e;
 }
 
 .toasts {
@@ -473,6 +532,20 @@
 
 .profileHeader {
   padding: 1.1rem 1.15rem 1rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.85rem;
+}
+
+.profileHeader > div:first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+.profileHeader .iconButton {
+  flex-shrink: 0;
+  margin-left: auto;
 }
 
 .profileTitle {
@@ -628,16 +701,23 @@
 
   .composerField {
     gap: 0.45rem;
+    padding: 0.3rem;
+  }
+
+  .composerAction,
+  .sendButton {
+    width: 2.55rem;
+    height: 2.55rem;
   }
 
   .composerInput {
-    height: 2.8rem;
-    padding-inline: 0.8rem;
+    height: 2.7rem;
+    padding-inline: 0.15rem;
+    font-size: 0.95rem;
   }
 
-  .sendButton {
-    width: 2.7rem;
-    height: 2.7rem;
+  .emojiPicker {
+    width: min(100%, 16rem);
   }
 
   .toasts {

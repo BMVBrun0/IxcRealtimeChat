@@ -5,9 +5,11 @@ import { createAccessToken } from "../utils/jwt";
 import { serializeUser } from "../serializers/user.serializer";
 import { getAuthenticatedUser } from "../types/auth";
 import { UserDocument } from "../models/User";
+import { emitUsersRefresh } from "../sockets/socket-bus";
 
 export const register = async (request: Request, response: Response) => {
   const user = await createUser(request.body);
+  emitUsersRefresh();
 
   response.status(201).json({
     success: true,
@@ -56,6 +58,7 @@ export const me = async (request: Request, response: Response) => {
 
 export const logout = async (request: Request, response: Response) => {
   await setUserOffline(getAuthenticatedUser(request).id);
+  emitUsersRefresh();
 
   response.status(200).json({
     success: true,

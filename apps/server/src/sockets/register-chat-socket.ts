@@ -2,6 +2,7 @@ import { Server } from "socket.io";
 import { User, UserDocument } from "../models/User";
 import { serializeUser } from "../serializers/user.serializer";
 import { createConversationMessage } from "../services/message.service";
+import { emitUsersRefresh } from "./socket-bus";
 import { setUserOffline, setUserOnline } from "../services/user.service";
 import { verifyAccessToken } from "../utils/jwt";
 import { sendMessageSchema } from "../validations/message.validation";
@@ -46,6 +47,7 @@ export const registerChatSocket = (io: Server) => {
     socket.join(currentUserRoom);
     await setUserOnline(currentUser.id);
     emitPresence(io, currentUser.id, "online", currentUser.lastSeen);
+    emitUsersRefresh();
 
     socket.on("chat:send", async (payload, acknowledge) => {
       const result = sendMessageSchema.safeParse(payload);
@@ -87,6 +89,7 @@ export const registerChatSocket = (io: Server) => {
       if (remainingSockets.length === 0) {
         await setUserOffline(currentUser.id);
         emitPresence(io, currentUser.id, "offline", new Date());
+        emitUsersRefresh();
       }
     });
   });
